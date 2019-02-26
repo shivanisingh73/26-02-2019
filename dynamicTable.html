@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+              }
+            </style>
+    </head>
+<body onload="dynamicTable()">
+
+<script>
+var array=[{
+    firstName:'michal',
+    lastName:'jhonson',
+    DOB:'18-2-2016'
+},
+{
+    firstName:'clary',
+    lastName:'sany',
+    DOB:'18-2-2016'
+},
+{
+    firstName:'anderson',
+    lastName:'macleon',
+    DOB:'18-2-2016'
+}
+]
+var key= Object.keys(array[0]);
+console.log(key);
+var value=array.map((element)=>{
+    return Object.values(element);
+    
+})
+console.log(value);
+for(let i=0; i<value.length; i++)
+{
+    console.log(value[i]);
+}
+function dynamicTable(){
+    var table=document.createElement("table");
+    var tr = document.createElement('tr');
+        for(let i=0; i<key.length; i++)
+        {
+            var th1 = document.createElement('th');
+            var button=document.createElement('button');
+            var text1 = document.createTextNode(key[i]);
+            button.appendChild(text1);
+            button.id='button'+i;
+            th1.appendChild(button);
+            tr.appendChild(th1);
+        }
+         table.appendChild(tr);
+        for(let i=0; i<value.length; i++)
+        {
+            var tr = document.createElement('tr');
+            for(let j=0; j<value[i].length; j++)
+            {
+                var td=document.createElement('td');
+                var text=document.createTextNode(value[i][j]);
+                td.appendChild(text);
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+    document.body.appendChild(table);
+}
+document.addEventListener('DOMContentLoaded', function(){
+    document.getElementById('button0').addEventListener('click', function (event) {
+        console.log('div click', event);
+    });
+ })
+
+/*myfunction()
+{
+    console.log("log");
+}
+var array1 = array.sort(function myfunction(a,b){
+    return a.firstName-b.firstName;
+});
+console.log(array1);*/
+</script>
+
+</body>
+</html>
