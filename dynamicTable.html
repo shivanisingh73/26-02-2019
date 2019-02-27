@@ -1,85 +1,125 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            table, th, td {
-                border: 1px solid black;
-              }
-            </style>
-    </head>
-<body onload="dynamicTable()">
+
+<head>
+    <style>
+        table,
+        th,
+        td {
+            font: 17px Calibri;
+            border: solid 2px rgb(10, 10, 10);
+            border-collapse: collapse;
+            padding: 2px 3px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        th {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+</body>
 
 <script>
-var array=[{
-    firstName:'michal',
-    lastName:'jhonson',
-    DOB:'18-2-2016'
-},
-{
-    firstName:'clary',
-    lastName:'sany',
-    DOB:'18-2-2016'
-},
-{
-    firstName:'anderson',
-    lastName:'macleon',
-    DOB:'18-2-2016'
-}
-]
-var key= Object.keys(array[0]);
-console.log(key);
-var value=array.map((element)=>{
-    return Object.values(element);
-    
-})
-console.log(value);
-for(let i=0; i<value.length; i++)
-{
-    console.log(value[i]);
-}
-function dynamicTable(){
-    var table=document.createElement("table");
-    var tr = document.createElement('tr');
-        for(let i=0; i<key.length; i++)
+    var arr = [
         {
-            var th1 = document.createElement('th');
-            var button=document.createElement('button');
-            var text1 = document.createTextNode(key[i]);
-            button.appendChild(text1);
-            button.id='button'+i;
-            th1.appendChild(button);
-            tr.appendChild(th1);
+            firstName: "monika",
+            lastName: "singh",
+            email: "monika.singh@gmail.com",
+            id: 6145,
+            phoneNumber: "9793456769",
+            designation: "s/w trainee",
+            DOB: "3/12/1997"
+        },
+        {
+            firstName: "shivani",
+            lastName: "singh",
+            email: "shivani.singh@gmail.com",
+            id: 6134,
+            phoneNumber: "9799455461",
+            designation: "s/w trainee",
+            DOB: "3/11/1998"
+        },
+        {
+            firstName: "anaya",
+            lastName: "mittal",
+            email: "anaya.mittal@gmail.com",
+            id: 4196,
+            phoneNumber: "9458536778",
+            designation: "s/w trainee",
+            DOB: "5/6/1997"
+        },
+    ];
+    function CreateTable() {
+
+        let previoustable = document.getElementById('dynamic_table');
+        if (!!previoustable) {
+            previoustable.remove();
         }
-         table.appendChild(tr);
-        for(let i=0; i<value.length; i++)
-        {
-            var tr = document.createElement('tr');
-            for(let j=0; j<value[i].length; j++)
-            {
-                var td=document.createElement('td');
-                var text=document.createTextNode(value[i][j]);
+        var table = document.createElement('table');
+        table.setAttribute('id', 'dynamic_table');
+
+        var key = Object.keys(arr[0]);
+        var value = arr.map((elements) => {
+            return Object.values(elements);
+        });
+
+        var tr = document.createElement('tr');
+        for (let i = 0; i < key.length; i++) {
+            var th = document.createElement('th');
+            th.setAttribute('id', key[i])
+            var text = document.createTextNode(key[i]);
+            th.appendChild(text);
+            tr.appendChild(th);
+        }
+        table.appendChild(tr);
+
+
+        for (let i = 0; i < value.length; i++) {
+            tr = document.createElement('tr');
+            for (let j = 0; j < key.length; j++) {
+                var td = document.createElement('td');
+                var text = document.createTextNode(value[i][j]);
                 td.appendChild(text);
                 tr.appendChild(td);
             }
             table.appendChild(tr);
         }
-    document.body.appendChild(table);
-}
-document.addEventListener('DOMContentLoaded', function(){
-    document.getElementById('button0').addEventListener('click', function (event) {
-        console.log('div click', event);
-    });
- })
+        document.body.appendChild(table);
+        addEventsToColumns();
+    }
 
-/*myfunction()
-{
-    console.log("log");
-}
-var array1 = array.sort(function myfunction(a,b){
-    return a.firstName-b.firstName;
-});
-console.log(array1);*/
+
+    function addEventsToColumns() {
+        var header = Object.keys(arr[0]);
+        console.log(header);
+        for (let i = 0; i < header.length; i++) {
+            document.getElementById(header[i]).addEventListener('click', function (event) {
+                event.preventDefault();
+                sortTable(event.target.innerHTML)
+            });
+        }
+    }
+
+    let flag = true;
+    function sortTable(param) {
+        arr.sort(compare);
+        function compare(a, b) {
+            if (a[param] > b[param] && flag) {
+                return 1;
+            }
+            else
+
+                return -1;
+        }
+        flag = !flag;
+        CreateTable();
+    }
+    CreateTable();
 </script>
 
-</body>
 </html>
